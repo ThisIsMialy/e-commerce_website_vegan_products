@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://kit.fontawesome.com/b5cff014dd.js" crossorigin="anonymous"></script> 
+        <script defer src="./assets/libs/all.js"></script>     
+        <script src="./assets/libs/jquery-3.6.1.js"></script>
+        <link href="./assets/styles/bootstrap.css" type="text/css" rel="stylesheet">
+        <script src="./assets/libs/bootstrap.bundle.js"></script>
+        <link href="./assets/styles/styles.css" type="text/css" rel="stylesheet">
+        
+
+        <title>Login & Register</title>
+
+    </head>
+    <body>
+        
+        <header id="header">
+            <div id="logo-title">
+                <img src="assets/images/brand-logo.png" alt="brand-logo">
+            </div>
+            <nav id="navigation">
+                <ul>
+                    <li><a href="home.html">
+                        <i class="fa-solid fa-house"></i> Home</a></li>
+                    <li  class="selected"><a href="login.html">
+                        <i class="fa-solid fa-right-to-bracket"></i> Login/Register</a></li>
+                    <li><a href="cart.html">
+                        <i class="fa-solid fa-cart-shopping"></i> 
+                        Shopping Cart  <span class="cart-circle" id="cartNavcount"></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="user-header dropdown">
+                <div class="dropdown-toggle user-dropdown" data-bs-toggle="dropdown">
+                    <i class="fa-solid fa-user"></i>
+                    <span id="usernameNav">Not Logged In</span>
+                </div>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="profile.html">View profile</a></li>
+                    <li><a class="dropdown-item" href="#">Change user</a></li>
+                    <li><a class="dropdown-item" href="#">View Orders</a></li>
+                    <li><a class="dropdown-item" id="logoutbtn">Logout</a></li>
+                </ul>
+            </div>
+        </header>
+        
+
+    <!--sign in and register-->
+        <main>
+            <!-- LOGOUT MODAL -->
+            <div class="modal fade" id="logoutSuccessModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="loginModalLabel">You have been logged out!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            See you soon.<br/>
+                            Thank you for shopping with #MY_VEGAN_WORLD.<br/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <!-- end of LOGOUT MODAL -->
+            
+            <div class="col-center">
+                <!-- Error notification -->
+                <div class="toast align-items-center top-100 end-100 text-bg-danger border-0" role="alert" id="regErrToast">
+                    <div class="d-flex">
+                      <div class="toast-body" id="regErrBody">
+                        This user already exists. Please try again.
+                      </div>
+                      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+                <!-- end of Error notification -->
+
+                <div class="container" id="login-container">
+                    <div class="form-container register-container">
+                        <form class="login-form">
+                            <h1 class="form-title">Register an account</h1>
+                            
+                            <span class="form-msg">Complete the registration form</span>
+                            <br/>
+                            <input type="text" placeholder="Username" id="regUsername" class="form-control"required/>
+                            <input type="text" placeholder="First name" id="regFname"class="form-control" required/>
+                            <input type="text" placeholder="Last name" id="regLname"class="form-control" required/>
+                            <input type="text" placeholder="Address" id="regAddress" class="form-control" required/>
+                            <input type="tel" placeholder="Phone Number" id="regTel" class="form-control" required/>
+                            <input type="email" placeholder="Email" id="regEmail" class="form-control" required/>
+                            <input type="date" placeholder="DOB" id="regDOB" class="form-control" required/>
+                            <input type="password" placeholder="Password" id="regPass" class="form-control" required/>
+                            <input type="password" placeholder="Confirm Password" id="regConPass" class="form-control" required/>
+                            <br/>
+                            <button class="form-button" type="button" onclick="register()">Register</button>
+                        </form>
+                    </div>
+                    
+            
+                    
+                    <div class="form-container sign-in-container">
+                        
+                        <form class="login-form">
+                            <h1 class="form-title">Sign in</h1>
+                            <span class="form-msg">Sign in with your account</span>
+                            <br/>
+                            <input type="text" placeholder="Username" class="form-control" id="loginUsername" required/>
+                            <input type="password" placeholder="Password" class="form-control" id="loginPass"required/>
+                            <br/>
+                            <button class="form-button" type="button" onclick="login()">Sign In</button>
+                        </form>
+
+                        
+                        <div class="alert alert-danger"
+                        id="loginErrorMsg" role="alert">
+                            <i class="fa-solid fa-xmark"></i>
+                            An error occured.<br/>
+                            Please make sure that you fill the fields with your correct login credentials and try again.
+                        </div>
+                        
+                        
+                    </div>
+
+                    <!-- Modal for successful login -->
+                    <div class="modal fade" id="loginSuccessModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="loginModalLabel">You have been successfully logged in!</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    You can now checkout your cart.<br/>
+                                    Thank you for shopping with #MY_VEGAN_WORLD.<br/>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end of modal-->
+            
+                    
+                    <div class="overlay-container">
+                        <div class="overlay">
+            
+                            <div class="overlay-panel overlay-left">
+                                <h2>If you already have an account with us...</h1>
+                                <p class="overlay-message">Proceed by clicking the button below to sign in with your account</p>
+                                <button class="transparent-btn" id="signIn">Sign In</button>
+                            </div>
+            
+                            <div class="overlay-panel overlay-right">
+                                <h2>New to #MY_VEGAN_WORLD?</h1>
+                                <p class="overlay-message">Register for free and Enjoy all our vegan and bio products.</p>
+                                <button class="transparent-btn" id="register">Register</button>
+                            </div>
+            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+    </body>
+    <footer id="footer">
+        <div id="footer-logo">
+            <img src="assets/images/brand-logo.png" alt="brand-logo">
+        </div>
+        <div class="row">
+            <div class="footer-message col-6"> 
+                <h3>About Us </h3>
+                <p>We welcome you to MY VEGAN WORLD!
+                    <br/>
+                    Your one stop shop for all the best vegan products ever.
+                    <br/>
+                    We have been open since 2022 offering our customers diffent ranges of vegan food.
+                    <br/>
+                    Don't forget to follow us on social media for the latest updates.
+                    
+                </p>
+            </div>
+            <div class="socials col-6">
+                <h3>Follow #MY_VEGAN_WORLD</h3>
+                <div class="row justify-content-center one-row" >
+                    <a href="https://facebook.com" target="_blank" class="col">
+                        <i class="fa-brands fa-facebook social-icons"></i>
+                    </a>
+
+                    <a href="https://twitter.com" target="_blank" class="col">
+                        <i class="fa-brands fa-twitter social-icons"></i>
+                    </a>
+        
+                    <a href="https://youtube.com" target="_blank" class="col">
+                        <i class="fa-brands fa-youtube social-icons"></i>
+                    </a>
+        
+                    <a href="https://tiktok.com" target="_blank" class="col">
+                        <i class="fa-brands fa-tiktok social-icons"></i>
+                    </a>
+        
+                    <a href="https://instagram.com" target="_blank" class="col">
+                        <i class="fa-brands fa-instagram social-icons"></i>
+                    </a>
+                </div>
+
+                <div class="contact-us">
+                    <h3>Contact Us</h3>
+                    <div class="row one-row">
+                        <a href="mailto: hellovegan@products.cutemail.com" target="_blank" class="col-2">
+                            <i class="fa-solid fa-envelope"></i>
+                        </a>
+                        <p class="col-9 footer-email">hellovegan@products.cutemail.com</p>
+                    </div>
+                    
+                </div>
+                
+            </div>
+
+            
+        </div>
+
+        <hr class="solid-line">
+
+        <div id="copyright">
+            &copy MY VEGAN WORLD. All Rights Reserved.
+        </div>
+
+    </footer>
+    <script src="./js/login_register.js"></script>
+    <script src="./js/all_pages.js"></script>
+    
+
+</html>

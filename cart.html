@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://kit.fontawesome.com/b5cff014dd.js" crossorigin="anonymous"></script> 
+        <script defer src="./assets/libs/all.js"></script>     
+        <script src="./assets/libs/jquery-3.6.1.js"></script>
+        <link href="./assets/styles/bootstrap.css" type="text/css" rel="stylesheet">
+        <script src="./assets/libs/bootstrap.bundle.js"></script>
+        <link href="./assets/styles/styles.css" type="text/css" rel="stylesheet">
+        
+
+        <title>Shopping Cart</title>
+    </head>
+
+    <body>
+        
+        <header id="header">
+            <div id="logo-title">
+                <img src="assets/images/brand-logo.png" alt="brand-logo">
+            </div>
+            <nav id="navigation">
+                <ul>
+                    <li ><a href="home.html">
+                        <i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="login.html">
+                        <i class="fa-solid fa-right-to-bracket"></i> Login/Register</a></li>
+                    <li class="selected"><a href="cart.html">
+                        <i class="fa-solid fa-cart-shopping"></i> 
+                        Shopping Cart  <span class="cart-circle">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="user-header dropdown">
+                <div class="dropdown-toggle user-dropdown" data-bs-toggle="dropdown">
+                    <i class="fa-solid fa-user"></i>
+                    <span id="usernameNav">Not Logged In</span>
+                </div>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="profile.html">View profile</a></li>
+                    <li><a class="dropdown-item" href="#">Change user</a></li>
+                    <li><a class="dropdown-item" href="#">View Orders</a></li>
+                    <li><a class="dropdown-item" id="logoutbtn">Logout</a></li>
+                </ul>
+            </div>
+        </header>
+
+
+        <main>
+            <!-- LOGOUT MODAL -->
+            <div class="modal fade" id="logoutSuccessModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="loginModalLabel">You have been logged out!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            See you soon.<br/>
+                            Thank you for shopping with #MY_VEGAN_WORLD.<br/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <!-- end of LOGOUT MODAL -->
+
+            <div class="cart-contents">
+                <div class="row cart-row">
+                    <div class="nav nav-pills basket-buttons col-3" role="tablist" data-tabs="tabs">
+                        <button type="button" class="nav-item">
+                            <a href="#current-basket" data-bs-toggle="tab" class="nav-link active">VIEW CURRENT BASKET</a>
+                        </button>
+
+                        <button type="button" class="nav-item" id="pastOrdersbtn">
+                            <a href="#past-orders" data-bs-toggle="tab" class="nav-link">VIEW PAST ORDERS</a>
+                        </button>
+                    </div>
+                
+                    <div class="tab-content order-contents col-9">
+                        <div role="tabpanel" class="tab-pane fade in active show" id="current-basket">
+                            <h3 class="tab-title">Your current basket</h3>
+                            <br/>
+                            <p>Date created: <span id="basketDate"></span></p>
+                            <p>Make sure that you have set the quantity correctly.</p>
+                            <div class="cancel-order">
+                                <button class="cancel-order-btn" id="cancelOrder">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                    Cancel this order
+                                </button>
+                            </div>
+                            
+
+
+                            <hr class="solid-line">
+                            <div id="currentCartDisplay">
+                                
+                            </div>
+                            
+
+                            <br/>
+                            <div class="current-basket-total"> 
+                                <p class="total-title">TOTAL:</p>
+                                <p class="total-amount">MUR <span id="totalAmount"></span></p>
+                            </div>
+
+                            <div class="checkout-error" id="noUser">
+                                <div class="alert alert-danger">
+                                    <i class="fa-solid fa-circle-exclamation"></i> You must be logged in to checkout.
+                                </div>
+                            </div>
+
+                            <div class="checkout" id="checkoutUser">
+                                <button class="checkout-btn" id="proceedCheckout">
+                                    <i class="fa-solid fa-check-double"></i>
+                                    Proceed to Checkout
+                                </button>
+                            </div>
+                            
+                        </div>
+
+                        <!-- Confirm order checkout modal  -->
+                        <div class="modal fade" id="checkout-confirm" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Confirm your order</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    
+                                    <div class="modal-body">
+                                        <h5>Order Details</h5>
+                                        <p>Date: <span id="modalDate"></span></p>
+                                        <br/>
+
+                                        <h5>Total: MUR <span class="confirm-price" id="modalPrice"></span></h5>
+
+                                        <br/>
+                                        <p>Thank you for shopping with #MY_VEGAN_WORLD!</p>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn confirm-order-btn" id="confirmOrder">Confirm order</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div role="tabpanel" class="tab-pane fade" id="past-orders">
+                            <h3 class="tab-title">Your order history</h3>
+                            <br/>
+
+                            <table class="table">
+                                <thead>
+                                    <tr class="past-orders-row">
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Order ID</th>
+                                        <th scope="col">Order Info</th>
+                                        <th scope="col">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pastOrdersDetails">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+        
+    </body>
+
+    <footer id="footer">
+        <div id="footer-logo">
+            <img src="assets/images/brand-logo.png" alt="brand-logo">
+        </div>
+        <div class="row">
+            <div class="footer-message col-6"> 
+                <p>We welcome you to MY VEGAN WORLD!
+                    <br/>
+                    Your one stop shop for all the best vegan products ever.
+                    <br/>
+                    We have been open since 2022 offering our customers diffent ranges of vegan food.
+                    <br/>
+                    Don't forget to follow us on social media for the latest updates.
+                    
+                </p>
+            </div>
+            <div class="socials col-6">
+                <h3>Follow #MY_VEGAN_WORLD</h3>
+                <div class="row justify-content-center one-row" >
+                    <a href="https://facebook.com" target="_blank" class="col">
+                        <i class="fa-brands fa-facebook social-icons"></i>
+                    </a>
+
+                    <a href="https://twitter.com" target="_blank" class="col">
+                        <i class="fa-brands fa-twitter social-icons"></i>
+                    </a>
+        
+                    <a href="https://youtube.com" target="_blank" class="col">
+                        <i class="fa-brands fa-youtube social-icons"></i>
+                    </a>
+        
+                    <a href="https://tiktok.com" target="_blank" class="col">
+                        <i class="fa-brands fa-tiktok social-icons"></i>
+                    </a>
+        
+                    <a href="https://instagram.com" target="_blank" class="col">
+                        <i class="fa-brands fa-instagram social-icons"></i>
+                    </a>
+                </div>
+
+                <div class="contact-us">
+                    <h3>Contact Us</h3>
+                    <div class="row one-row">
+                        <a href="mailto: hellovegan@products.cutemail.com" target="_blank" class="col-2">
+                            <i class="fa-solid fa-envelope"></i>
+                        </a>
+                        <p class="col-9 footer-email">hellovegan@products.cutemail.com</p>
+                    </div>
+                    
+                </div>
+                
+            </div>
+
+            
+        </div>
+
+        <hr class="solid-line">
+
+        <div id="copyright">
+            &copy MY VEGAN WORLD. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script src="./js/all_pages.js"></script>
+    <script src="./js/home_cart.js"></script>
+    <script src="./js/cart.js"></script>
+    
+
+
+</html>

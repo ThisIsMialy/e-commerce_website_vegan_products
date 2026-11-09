@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>List all Products</title>
+    </head>
+    <body>
+        <h1>Products</h1>
+        <div id="products"></div>
+
+        <script>
+            //Download products when page loads
+            window.onload = function loadProducts(){
+                //Create request object
+                let request = new XMLHttpRequest();
+
+                //Create event handler that specifies what should happen when server responds
+                request.onload = () => {
+                    //Check HTTP status code
+                    if(request.status === 200){
+                        //Add data from server to page
+                        displayProducts(request.responseText);
+                    }
+                    else
+                        alert("Error communicating with server: " + request.status);
+                };
+
+                //Set up request and send it
+                request.open("GET", "./php/products.php");
+                request.send();
+            }
+
+            //Loads products into page
+            function displayProducts(jsonProducts){
+                //Convert JSON to array of product objects
+                // let prodArray = JSON.parse(jsonProducts);
+                let prodArray = jsonProducts;
+                let htmlStr;
+                for (let i=0; i<prodArray.length; ++i){
+                    htmlStr += prodArray[i]["Product Name"]
+                }
+
+                // document.getElementById("products").innerHTML = typeof(prodArray);
+                document.getElementById("products").innerHTML = prodArray;
+
+                // //Create HTML table containing product data
+                // let htmlStr = "<table>";
+                // for(let i=0; i<prodArray.length; ++i){
+                //     htmlStr += "<tr>";
+                //     htmlStr += "<td>" + prodArray[i].name + "</td>";
+                //     htmlStr += "<td><img width=50 height=50 src='" + prodArray[i].image_url + "'></td>";
+                //     htmlStr += "<td>£" + prodArray[i].price + "</td>";
+                //     htmlStr += "</tr>";
+                // }
+                // //Finish off table and add to document
+                // htmlStr += "</table>";
+                // document.getElementById("products").innerHTML = htmlStr;
+            }
+        </script>
+    </body>
+</html>

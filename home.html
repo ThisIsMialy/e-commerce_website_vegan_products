@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://kit.fontawesome.com/b5cff014dd.js" crossorigin="anonymous"></script> 
+        <script defer src="./assets/libs/all.js"></script>     
+        <script src="./assets/libs/jquery-3.6.1.js"></script>
+        <link href="./assets/styles/bootstrap.css" type="text/css" rel="stylesheet">
+        <script src="./assets/libs/bootstrap.bundle.js"></script>
+        <link href="./assets/styles/styles.css" type="text/css" rel="stylesheet">
+        
+        <title>Home</title>
+    </head>
+
+    <body>
+        
+        <header id="header">
+            <div id="logo-title">
+                <img src="assets/images/brand-logo.png" alt="brand-logo">
+            </div>
+            <nav id="navigation">
+                <ul>
+                    <li class="selected"><a href="home.html">
+                        <i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="login.html">
+                        <i class="fa-solid fa-right-to-bracket"></i> Login/Register</a></li>
+                    <li><a href="cart.html">
+                        <i class="fa-solid fa-cart-shopping"></i> 
+                        Shopping Cart  <span class="cart-circle">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="user-header dropdown">
+                <div class="dropdown-toggle user-dropdown" data-bs-toggle="dropdown">
+                    <i class="fa-solid fa-user"></i>
+                    <span id="usernameNav">Not Logged In</span>
+                </div>
+                <ul class="dropdown-menu" id="userNavDropdown">
+                    <li><a class="dropdown-item" href="#" id="viewProfile">View profile</a></li>
+                    <li><a class="dropdown-item" href="#" id="changeUser">Change user</a></li>
+                    <li><a class="dropdown-item" href="#" id="viewOrders">View Orders</a></li>
+                    <li><a class="dropdown-item" id="logoutbtn">Logout</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <main>
+            <!-- LOGOUT MODAL -->
+            <div class="modal fade" id="logoutSuccessModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="loginModalLabel">You have been logged out!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            See you soon.<br/>
+                            Thank you for shopping with #MY_VEGAN_WORLD.<br/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <!-- end of LOGOUT MODAL -->
+
+ 
+            <div id="banner-carousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="./assets/images/vegan-banner-tamplate-food-icon-178675083.jpg" class="d-block banner-block w-100" alt="Food banner">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="./assets/images/banner2.jpg" class="d-block banner-block w-100" alt="milk banner">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="./assets/images/banner3.jpg" class="d-block banner-block w-100" alt="chocolate banner">
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#banner-carousel" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#banner-carousel" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" ></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+            <!-- Modal for Adding to Cart , only appears when button add to cart is clicked-->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">SUCCESSFULLY ADDED TO YOUR CART!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            You can change the quantity of the item in the Shopping Cart.<br/>
+                            Product Name: <span id="cartProdName"></span> <br/>
+                            Unit Price: MUR <span id="cartProdPrice"></span>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of modal-->
+
+            
+
+            <div class="search-w-alert">
+                <div class="search-top">
+                    What are you looking for?
+                    <div class="search-bar"> 
+                        <input type="text" class="form-control" id="searchWord" placeholder="Search">
+                        <button class="btn btn-primary" onclick="submitSearch('name'); return false;">SEARCH</button>
+                    </div>
+                    <!-- id="submitSearch" -->
+                    
+                </div>
+                <div class="alert alert-danger" role="alert" id="searchAlert">
+                    Not enough characters to perform search.
+                </div>
+            </div>
+
+            
+
+            <hr class="solid-line"/> 
+            <div id="sorting-items"> 
+                <span> Sort by:</span>
+                <button class="sort-type active" id="sortByCategory" onclick="submitSearch('category')">Category</button>
+                <button class="sort-type" id="sortByName"onclick="submitSearch('nameAsc')">Name-Ascending</button>
+                <button class="sort-type" id="sortByName"onclick="submitSearch('nameDesc')">Name-Descending</button>
+
+                <button class="sort-type" id="sortByPrice" onclick="submitSearch('priceAsc')">Price-Ascending</button>
+                <button class="sort-type" id="sortByPrice" onclick="submitSearch('priceDesc')">Price-Descending</button>
+                <hr class="solid-line"/>
+            </div>    
+            
+
+            
+            <div id="search-section">
+                <div class="section-title">
+                    <button class="sort-type" id="sortByPrice" onclick="location.href = 'home.html'">
+                        <i class="fa-solid fa-chevron-left"></i> Back to all products
+                    </button>
+                    <hr class="solid-line"/> 
+                    <h2>Search Results for: "<span id="searchKeyWord"></span>"</h2>
+                </div>
+                
+                <div id="search_results">
+                    <div class="products-display-all" id="display_section">
+
+                    </div> 
+                </div>
+                <hr class="solid-line"/> 
+            </div>
+
+            <div id="userRecommendations">
+                <div class="products-section">
+                    <div class="section-title">
+                        <h2>Recommended For You</h2>
+                    </div>
+                    <div class="products-recommend" id="recommendedProducts">
+                        <div class="single-product card">
+                            <img src="./assets/images/items/faux_meat/item-1.jpg" class="card-img-top"/>
+                            <div class="card-body">
+                                <p class="card-text product-name text-wrap">Name</p>
+                                <p class="card-text product-brand ">Brand</p>
+                                <p class="card-text product-price ">MUR Unit Price</p>
+                            </div>
+                            <button data-bs-toggle="modal" data-bs-target="#exampleModal">Add To Cart</button>
+                        </div>
+                        <div class="single-product card">
+                            <img src="./assets/images/items/faux_meat/item-1.jpg" class="card-img-top"/>
+                            <div class="card-body">
+                                <p class="card-text product-name text-wrap">Name</p>
+                                <p class="card-text product-brand ">Brand</p>
+                                <p class="card-text product-price ">MUR Unit Price</p>
+                            </div>
+                            <button data-bs-toggle="modal" data-bs-target="#exampleModal">Add To Cart</button>
+                        </div>
+                        <div class="single-product card">
+                            <img src="./assets/images/items/faux_meat/item-1.jpg" class="card-img-top"/>
+                            <div class="card-body">
+                                <p class="card-text product-name text-wrap">Name</p>
+                                <p class="card-text product-brand ">Brand</p>
+                                <p class="card-text product-price ">MUR Unit Price</p>
+                            </div>
+                            <button data-bs-toggle="modal" data-bs-target="#exampleModal">Add To Cart</button>
+                        </div>
+                    </div> <!-- end of products-recommend -->
+                </div> <!-- end of products-section -->
+                <hr class="solid-line">
+
+            </div>
+
+            <!-- Where all products will de displayed - from the server  -->
+            <div id="showAllProducts">
+
+
+            </div>
+                
+        </main>
+        
+        
+    </body>
+
+    <footer id="footer">
+        <div id="footer-logo">
+            <img src="assets/images/brand-logo.png" alt="brand-logo">
+        </div>
+        <div class="row">
+            <div class="footer-message col-6"> 
+                <h3>About Us </h3>
+                <p>We welcome you to MY VEGAN WORLD!
+                    <br/>
+                    Your one stop shop for all the best vegan products ever.
+                    <br/>
+                    We have been open since 2022 offering our customers diffent ranges of vegan food.
+                    <br/>
+                    Don't forget to follow us on social media for the latest updates.
+                    
+                </p>
+            </div>
+            <div class="socials col-6">
+                <h3>Follow #MY_VEGAN_WORLD</h3>
+                <div class="row justify-content-center one-row" >
+                    <a href="https://facebook.com" target="_blank" class="col">
+                        <i class="fa-brands fa-facebook social-icons"></i>
+                    </a>
+
+                    <a href="https://twitter.com" target="_blank" class="col">
+                        <i class="fa-brands fa-twitter social-icons"></i>
+                    </a>
+        
+                    <a href="https://youtube.com" target="_blank" class="col">
+                        <i class="fa-brands fa-youtube social-icons"></i>
+                    </a>
+        
+                    <a href="https://tiktok.com" target="_blank" class="col">
+                        <i class="fa-brands fa-tiktok social-icons"></i>
+                    </a>
+        
+                    <a href="https://instagram.com" target="_blank" class="col">
+                        <i class="fa-brands fa-instagram social-icons"></i>
+                    </a>
+                </div>
+
+                <div class="contact-us">
+                    <h3>Contact Us</h3>
+                    <div class="row one-row">
+                        <a href="mailto: hellovegan@products.cutemail.com" target="_blank" class="col-2">
+                            <i class="fa-solid fa-envelope"></i>
+                        </a>
+                        <p class="col-9 footer-email">hellovegan@products.cutemail.com</p>
+                    </div>
+                    
+                </div>
+                
+            </div>
+
+            
+        </div>
+
+        <hr class="solid-line">
+
+        <div id="copyright">
+            &copy MY VEGAN WORLD. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script src="./js/all_pages.js"></script>
+    <script src="./js/home.js"></script>
+    <script src="./js/recommend.js"></script>
+    <script src="./js/home_cart.js"></script>
+
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://kit.fontawesome.com/b5cff014dd.js" crossorigin="anonymous"></script> 
+        <script defer src="./assets/libs/all.js"></script>     
+        <script src="./assets/libs/jquery-3.6.1.js"></script>
+        <link href="./assets/styles/bootstrap.css" type="text/css" rel="stylesheet">
+        <script src="./assets/libs/bootstrap.bundle.js"></script>
+        <link href="./assets/styles/styles.css" type="text/css" rel="stylesheet">
+        
+
+        <title>Profile</title>
+    </head>
+
+    <body>
+
+        <header id="header">
+            <div id="logo-title">
+                <img src="assets/images/brand-logo.png" alt="brand-logo">
+            </div>
+            <nav id="navigation">
+                <ul>
+                    <li><a href="home.html">
+                        <i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="login.html">
+                        <i class="fa-solid fa-right-to-bracket"></i> Login/Register</a></li>
+                    <li><a href="cart.html">
+                        <i class="fa-solid fa-cart-shopping"></i> 
+                        Shopping Cart  <span class="cart-circle">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="user-header dropdown">
+                <div class="dropdown-toggle user-dropdown" data-bs-toggle="dropdown">
+                    <i class="fa-solid fa-user"></i>
+                    <span id="usernameNav">Not Logged In</span>
+                </div>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#" id="viewProfile">View profile</a></li>
+                    <li><a class="dropdown-item" href="#" id="changeUser">Change user</a></li>
+                    <li><a class="dropdown-item" href="#" id="viewOrders">View Orders</a></li>
+                    <li><a class="dropdown-item" id="logoutbtn">Logout</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <main>
+            <!-- LOGOUT MODAL -->
+            <div class="modal fade" id="logoutSuccessModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="loginModalLabel">You have been logged out!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            See you soon.<br/>
+                            Thank you for shopping with #MY_VEGAN_WORLD.<br/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of LOGOUT MODAL -->
+
+            <!-- Error notification -->
+            <div class="toast align-items-center top-100 end-100 text-bg-danger border-0" role="alert" id="editErrToast">
+                <div class="d-flex">
+                  <div class="toast-body" id="editErrBody">
+                    This user already exists. Please try again.
+                  </div>
+                  <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+            <!-- end of Error notification -->
+
+            <div class="edit-profile-main">
+                <div class="edit-profile-contents"> 
+                    <h1 class="edit-title">Profile</h1>
+                    <p>Make sure to click "Save changes" for any edits you make to your profile.</p>
+                    <!-- <button><i class="fa-regular fa-pen-to-square"></i> Edit my info</button> -->
+
+                    <div class="container">
+                        <form class="edit-info-form">
+                            <div class="edit-row row">
+                                <div class="col-4">Username:</div>
+                                <div class="col-8"><input disabled type="text" placeholder="Username" 
+                                    id="editUsername" class="form-control" name="username"/></div>
+                            </div>
+                            
+                            <div class="edit-row row">
+                                <div class="col-4">First Name:</div>
+                                <div class="col-8"><input type="text" placeholder="First name" class="form-control" 
+                                    id="editFname" /></div>
+                            </div>
+
+                            <div class="edit-row row">
+                                <div class="col-4">Last Name:</div>
+                                <div class="col-8"><input type="text" placeholder="Last name" class="form-control" 
+                                    id="editLname" name="lname"> </div>   
+                            </div>
+
+                            <div class="edit-row row">
+                                <div class="col-4">Address:</div>
+                                <div class="col-8"><input type="text" placeholder="Address" class="form-control" 
+                                    id="editAddress" name="address" /></div>
+
+                            </div>
+
+                            <div class="edit-row row">
+                                <div class="col-4">Phone Number:</div>
+                                <div class="col-8"><input type="tel" placeholder="Phone Number" class="form-control"
+                                    id="editPhone"  name="phone" /></div>
+                            </div>
+                            
+                            <div class="edit-row row">
+                                <div class="col-4">Email:</div>
+                                <div class="col-8"><input type="email" placeholder="Email" class="form-control" 
+                                    id="editEmail" name="email"/></div>
+                            </div>
+
+                            <div class="edit-row row">
+                                <div class="col-4">Date of Birth:</div>
+                                <div class="col-8"><input type="date" placeholder="DOB" class="form-control" 
+                                    id="editDOB" name="dob"/></div>
+
+                            </div>
+
+                            <p>If you want to change your password, make sure to re-type the password to confirm it.</p>
+                            <div class="edit-row row">
+                                <div class="col-4">Password:</div>
+                                <div class="col-8">
+                                    <input type="password" placeholder="Password"  class="form-control" 
+                                    id="editPassword" name="password" />
+                                </div>
+                            </div>
+
+                            <div class="edit-row row">
+                                <div class="col-4">Confirm Password:</div>
+                                <div class="col-8">
+                                    <input type="password" placeholder="Confirm Password" class="form-control" 
+                                    id="editConfPwd" name="confpwd"/>
+                                </div>
+                            </div>
+
+                            <button type="button" class="submit-edit btn form-button"
+                            onclick="validateChanges()" id="submitEditBtn">
+                                <i class="fa-solid fa-user-pen"></i> Save changes
+                            </button>
+                        </form>
+                    
+
+                    </div>
+
+                </div>
+                
+            </div>
+
+        </main>
+
+    </body>
+    
+
+    <footer id="footer">
+        <div id="footer-logo">
+            <img src="assets/images/brand-logo.png" alt="brand-logo">
+        </div>
+        <div class="row">
+            <div class="footer-message col-6"> 
+                <h3>About Us </h3>
+                <p>We welcome you to MY VEGAN WORLD!
+                    <br/>
+                    Your one stop shop for all the best vegan products ever.
+                    <br/>
+                    We have been open since 2022 offering our customers diffent ranges of vegan food.
+                    <br/>
+                    Don't forget to follow us on social media for the latest updates.
+                    
+                </p>
+            </div>
+            <div class="socials col-6">
+                <h3>Follow #MY_VEGAN_WORLD</h3>
+                <div class="row justify-content-center one-row" >
+                    <a href="https://facebook.com" target="_blank" class="col">
+                        <i class="fa-brands fa-facebook social-icons"></i>
+                    </a>
+
+                    <a href="https://twitter.com" target="_blank" class="col">
+                        <i class="fa-brands fa-twitter social-icons"></i>
+                    </a>
+        
+                    <a href="https://youtube.com" target="_blank" class="col">
+                        <i class="fa-brands fa-youtube social-icons"></i>
+                    </a>
+        
+                    <a href="https://tiktok.com" target="_blank" class="col">
+                        <i class="fa-brands fa-tiktok social-icons"></i>
+                    </a>
+        
+                    <a href="https://instagram.com" target="_blank" class="col">
+                        <i class="fa-brands fa-instagram social-icons"></i>
+                    </a>
+                </div>
+
+                <div class="contact-us">
+                    <h3>Contact Us</h3>
+                    <div class="row one-row">
+                        <a href="mailto: hellovegan@products.cutemail.com" target="_blank" class="col-2">
+                            <i class="fa-solid fa-envelope"></i>
+                        </a>
+                        <p class="col-9 footer-email">hellovegan@products.cutemail.com</p>
+                    </div>
+                    
+                </div>
+                
+            </div>
+
+            
+        </div>
+
+
+        <hr class="solid-line">
+
+        <div id="copyright">
+            &copy MY VEGAN WORLD. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script src="./js/all_pages.js"></script>
+    <script src="./js/profile.js"></script>
+
+</html>
+
